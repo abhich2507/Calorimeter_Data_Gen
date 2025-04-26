@@ -1,0 +1,7 @@
+/home/alma1/simulation_small_cell/build/CMakeFiles/exampleB4a.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/edit_cache.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/rebuild_cache.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/list_install_components.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/install.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/install/local.dir
+/home/alma1/simulation_small_cell/build/CMakeFiles/install/strip.dir

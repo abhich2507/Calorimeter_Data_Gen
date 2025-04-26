@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "Ntuple.C": "cpp",
+        "Ntuple_8.C": "cpp",
+        "part_info.C": "cpp"
+    }
+}

@@ -35,7 +35,7 @@ make
 
 Ensure that the CLHEP library is installed and available on your system.
 
-##Running Simulation
+## Running Simulation
 ```bash
 ./exampleb4a -f "path/to/your/directory/Output.root -m run3.mac
 ```

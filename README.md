@@ -37,7 +37,7 @@ Ensure that the CLHEP library is installed and available on your system.
 
 ## Running Simulation
 ```bash
-./exampleb4a -f "path/to/your/directory/Output.root -m run3.mac
+./exampleb4a -f "path/to/your/directory/Output.root" -m run3.mac
 ```
 run3.mac-> This file is available in build_1 directory. It is a macrofile contains parameters like: particle species, number of events and energy of particle. 
 

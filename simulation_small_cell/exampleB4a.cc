@@ -45,9 +45,11 @@
 namespace {
   void PrintUsage() {
     G4cerr << " Usage: " << G4endl;
-    G4cerr << " exampleB4a [-m macro ] [-u UIsession] [-t nThreads] [-vDefault]"
+    G4cerr << " exampleB4a [-m macro ] [-u UIsession] [-t nThreads] [-f outputFile] [-vDefault]"
            << G4endl;
     G4cerr << "   note: -t option is available only for multi-threaded mode."
+           << G4endl;
+    G4cerr << "   -f: specify output ROOT file path (default: output.root)"
            << G4endl;
   }
 }
@@ -61,13 +63,14 @@ int main(int argc,char** argv)
 {
   // Evaluate arguments
   //
-  if ( argc > 7 ) {
+  if ( argc > 9 ) {
     PrintUsage();
     return 1;
   }
 
   G4String macro;
   G4String session;
+  G4String outputFile = "output.root"; // Default output file
   G4long seed = time(nullptr);
 
   G4bool verboseBestUnits = true;
@@ -78,6 +81,7 @@ int main(int argc,char** argv)
     if      ( G4String(argv[i]) == "-m" ) macro = argv[i+1];
     else if ( G4String(argv[i]) == "-s" ) seed = std::stoi(argv[i+1]);
     else if ( G4String(argv[i]) == "-u" ) session = argv[i+1];
+    else if ( G4String(argv[i]) == "-f" ) outputFile = argv[i+1];
 #ifdef G4MULTITHREADED
     else if ( G4String(argv[i]) == "-t" ) {
       nThreads = G4UIcommand::ConvertToInt(argv[i+1]);
@@ -129,7 +133,7 @@ int main(int argc,char** argv)
   auto physicsList = new FTFP_BERT;
   runManager->SetUserInitialization(physicsList);
 
-  auto actionInitialization = new B4a::ActionInitialization(detConstruction);
+  auto actionInitialization = new B4a::ActionInitialization(detConstruction, outputFile);
   runManager->SetUserInitialization(actionInitialization);
 
   // Initialize visualization

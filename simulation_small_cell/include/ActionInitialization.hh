@@ -46,7 +46,7 @@ namespace B4a
 class ActionInitialization : public G4VUserActionInitialization
 {
   public:
-    ActionInitialization(B4::DetectorConstruction*);
+    ActionInitialization(B4::DetectorConstruction*, const G4String& outputFile = "output.root");
     ~ActionInitialization() override;
 
     void BuildForMaster() const override;
@@ -54,6 +54,7 @@ class ActionInitialization : public G4VUserActionInitialization
 
   private:
     B4::DetectorConstruction* fDetConstruction = nullptr;
+    G4String fOutputFile;
 };
 
 }

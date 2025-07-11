@@ -1,31 +1,4 @@
-//
-// ********************************************************************
-// * License and Disclaimer                                           *
-// *                                                                  *
-// * The  Geant4 software  is  copyright of the Copyright Holders  of *
-// * the Geant4 Collaboration.  It is provided  under  the terms  and *
-// * conditions of the Geant4 Software License,  included in the file *
-// * LICENSE and available at  http://cern.ch/geant4/license .  These *
-// * include a list of copyright holders.                             *
-// *                                                                  *
-// * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
-// * work  make  any representation or  warranty, express or implied, *
-// * regarding  this  software system or assume any liability for its *
-// * use.  Please see the license in the file  LICENSE  and URL above *
-// * for the full disclaimer and the limitation of liability.         *
-// *                                                                  *
-// * This  code  implementation is the result of  the  scientific and *
-// * technical work of the GEANT4 collaboration.                      *
-// * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
-// * use  in  resulting  scientific  publications,  and indicate your *
-// * acceptance of all terms of the Geant4 Software license.          *
-// ********************************************************************
-//
-//
-/// \file RunAction.cc
-/// \brief Implementation of the B4::RunAction class
+
 
 
 #include "RunAction.hh"
@@ -41,7 +14,8 @@ namespace B4
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-RunAction::RunAction()
+RunAction::RunAction(const G4String& outputFile)
+ : fOutputFile(outputFile)
 {
   // set printing event number per each event
   G4RunManager::GetRunManager()->SetPrintProgress(1);
@@ -57,10 +31,8 @@ RunAction::RunAction()
     // Note: merging ntuples is available only with Root output
 
   // Book histograms, ntuple
-  // G4String fileName = "/mnt/c/Users/hnayak/Documents/Pion_100GeV/pionu.root";
-  G4String fileName ="/mnt/c/Users/hnayak/Documents/Proton_100GeV/proton.root";
-
-  analysisManager->OpenFile(fileName);
+  // Use the configurable output file name
+  analysisManager->OpenFile(fOutputFile);
   
   analysisManager->CreateNtuple("part_info","part_info");
   analysisManager->CreateNtupleDColumn("event_id");
@@ -80,13 +52,7 @@ RunAction::RunAction()
   // analysisManager->CreateNtupleDColumn("picell_idx");
   analysisManager->FinishNtuple(0);
   
-  // analysisManager->CreateNtuple("Edep","Edep");
-  // analysisManager->CreateNtupleDColumn("Event_ID");
-  // analysisManager->CreateNtupleDColumn("edep");
-  // analysisManager->CreateNtupleDColumn("cell_idx");
-  // analysisManager->CreateNtupleDColumn("cublet_idx");
-  // analysisManager->CreateNtupleDColumn("cells_in_cublet_idx");
-  // analysisManager->FinishNtuple(1);
+  
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -102,12 +68,8 @@ void RunAction::BeginOfRunAction(const G4Run* /*run*/)
   // Get analysis manager
   auto analysisManager = G4AnalysisManager::Instance();
 
-  
-  // Open an output file
-  // G4String fileName ="/mnt/c/Users/hnayak/Documents/Pion_100GeV/pionu.root";
-  G4String fileName ="/mnt/c/Users/hnayak/Documents/Proton_100GeV/proton.root";
- 
-  analysisManager->OpenFile(fileName); 
+  // Open an output file using the configurable filename
+  analysisManager->OpenFile(fOutputFile); 
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

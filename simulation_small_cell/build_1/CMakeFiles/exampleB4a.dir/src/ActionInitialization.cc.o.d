@@ -3,8 +3,6 @@ CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o: \
  /usr/include/stdc-predef.h \
  /home/alma1/Data_Gen/simulation_small_cell/include/ActionInitialization.hh \
  /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4VUserActionInitialization.hh \
- /home/alma1/Data_Gen/simulation_small_cell/include/PrimaryGeneratorAction.hh \
- /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/globals.hh \
  /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4ios.hh \
  /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4Types.hh \
@@ -205,6 +203,8 @@ CMakeFiles/exampleB4a.dir/src/ActionInitialization.cc.o: \
  /usr/include/c++/11/bits/parse_numbers.h \
  /usr/include/c++/11/bits/std_mutex.h \
  /usr/include/c++/11/bits/unique_lock.h \
+ /home/alma1/Data_Gen/simulation_small_cell/include/PrimaryGeneratorAction.hh \
+ /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4VUserPrimaryGeneratorAction.hh \
  /home/alma1/Data_Gen/simulation_small_cell/include/RunAction.hh \
  /home/alma1/GEANT4/GEANT4_INSTALL/include/Geant4/G4UserRunAction.hh \
  /home/alma1/Data_Gen/simulation_small_cell/include/EventAction.hh \

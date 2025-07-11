@@ -18,6 +18,6 @@
 # 1000 events
 #
 /gun/particle proton
-/gun/energy 100 GeV
+/gun/energy 1 GeV
 #/run/printProgress 25
-/run/beamOn 1000
+/run/beamOn 1

@@ -82,12 +82,12 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   // Geometry parameters of the calorimeter
   G4double cellSizeXY =  3.*mm;
   G4double cellSizeZ  = 6.*mm;
-  G4double nCellsXY = 100;
-  G4double nCellsZ  = 200;
+  G4int    nCellsXY = 100;
+  G4int    nCellsZ  = 200;
   G4double calorSizeXY = nCellsXY * cellSizeXY;
   G4double calorSizeZ  = nCellsZ  * cellSizeZ;
-  auto worldSizeXY = calorSizeXY;
-  auto worldSizeZ  = calorSizeZ * 1; 
+  auto worldSizeXY = calorSizeXY * 1.1;
+  auto worldSizeZ  = calorSizeZ  * 1.1;
 
   // Get materials
   auto defaultMaterial = G4Material::GetMaterial("Galactic");
@@ -119,30 +119,35 @@ G4VPhysicalVolume* DetectorConstruction::DefineVolumes()
   );
 
 
-  auto solidDetector=new G4Box("solidDetector", cellSizeXY/2*mm, cellSizeXY/2*mm, cellSizeZ/2*mm);
+  auto solidDetector=new G4Box("solidDetector", cellSizeXY/2, cellSizeXY/2, cellSizeZ/2);
   auto logicDetector= new G4LogicalVolume(solidDetector,detectorMaterial,"logicDetector");
-  G4double a=0;
-  for (G4int k = 0; k < nCellsZ; k++) {
-  	for (G4int j = 0; j < nCellsXY; j++) { 
-      for (G4int i = 0; i < nCellsXY; i++) { 
-        auto physDetector = new G4PVPlacement(
-          0,
-          G4ThreeVector(
-            -((calorSizeXY-cellSizeXY)/2.)*mm + (cellSizeXY*i)*mm,
-            -((calorSizeXY-cellSizeXY)/2.)*mm + (cellSizeXY*j)*mm,
-            -((calorSizeZ -cellSizeZ) /2.)*mm + (cellSizeZ *k)*mm
-          ),
-          logicDetector,
-          "physDetector",
-          worldLV,
-          false,
-          a,
-          false
-        );
-        a=a+1;
-  		}
-    }
-  }
+
+  //
+  // The calorimeter is voxelised as 3 nested replicas:
+  //   Z: nCellsZ slabs -> X: nCellsXY rods -> Y: nCellsXY cells
+  // This replaces the previous nCellsXY*nCellsXY*nCellsZ explicit G4PVPlacement
+  // loop (2,000,000 physical volumes) with three lightweight G4PVReplica
+  // objects, making detector construction orders of magnitude faster and far
+  // less memory-hungry.
+  //
+  auto solidCalor = new G4Box("solidCalorimeter", calorSizeXY/2, calorSizeXY/2, calorSizeZ/2);
+  auto logicCalor = new G4LogicalVolume(solidCalor, defaultMaterial, "Calorimeter");
+  new G4PVPlacement(0, G4ThreeVector(0.,0.,0.), logicCalor, "Calorimeter",
+                    worldLV, false, 0, false);
+
+  // Z slices: full transverse size, one cell thick along z
+  auto solidSlab = new G4Box("solidSlab", calorSizeXY/2, calorSizeXY/2, cellSizeZ/2);
+  auto logicSlab = new G4LogicalVolume(solidSlab, defaultMaterial, "Slab");
+  new G4PVReplica("ReplicaZ", logicSlab, logicCalor, kZAxis, nCellsZ, cellSizeZ);
+
+  // X rods: one cell wide in x, full y, one cell thick along z
+  auto solidRod = new G4Box("solidRod", cellSizeXY/2, calorSizeXY/2, cellSizeZ/2);
+  auto logicRod = new G4LogicalVolume(solidRod, defaultMaterial, "Rod");
+  new G4PVReplica("ReplicaX", logicRod, logicSlab, kXAxis, nCellsXY, cellSizeXY);
+
+  // Y cells: one cell in x, one cell in y, one cell thick along z
+  new G4PVReplica("ReplicaY", logicDetector, logicRod, kYAxis, nCellsXY, cellSizeXY);
+
   //
   // Visualization attributes
   //

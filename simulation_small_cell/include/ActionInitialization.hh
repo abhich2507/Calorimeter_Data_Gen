@@ -31,6 +31,7 @@
 #define B4aActionInitialization_h 1
 
 #include "G4VUserActionInitialization.hh"
+#include "globals.hh"
 //#include "Runaction.hh"
 
 namespace B4

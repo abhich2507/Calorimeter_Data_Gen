@@ -112,7 +112,16 @@ void SteppingAction::UserSteppingAction(const G4Step* step)
     // compute geometric and temporal info
 
     auto touchable = step->GetPreStepPoint()->GetTouchable(); // Pre!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    G4int picell_idx = touchable->GetVolume()->GetCopyNo();
+    // The cells are built from nested G4PVReplica volumes (ReplicaZ/ReplicaX/ReplicaY),
+    // so the global cell index must be reconstructed from the touchable history
+    // rather than read from a single copy number.
+    G4int picell_idx = 0;
+    if (touchable->GetHistoryDepth() >= 2) {
+      G4int yReplica = touchable->GetCopyNumber(0); // ReplicaY -> y cell index
+      G4int xReplica = touchable->GetCopyNumber(1); // ReplicaX -> x cell index
+      G4int zReplica = touchable->GetCopyNumber(2); // ReplicaZ -> z cell index
+      picell_idx = zReplica * 10000 + yReplica * 100 + xReplica;
+    }
   
     G4int z_idx = picell_idx / 100000;
     G4int x_idx = ((picell_idx % 10000) % 100) / 10;

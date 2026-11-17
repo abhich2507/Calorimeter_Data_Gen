@@ -1,0 +1,29 @@
+# Build directories
+build/
+build_*/
+
+# ROOT data files
+*.root
+
+# Plot images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+
+# Compiled binaries and objects
+*.o
+*.a
+*.so
+*.dylib
+Ntuple_manager
+Ntuple_8
+
+# macOS / editor clutter
+.DS_Store
+.vscode/
+*.swp
+
+# Logs
+*.log

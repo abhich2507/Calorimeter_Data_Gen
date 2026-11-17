@@ -1,8 +1,8 @@
 
 #include <map>
 
-void edep(const char* input  = "/work/eic/users/aabhishe/Calorimeter_Data_Gen/simulation_small_cell/Data/proton100.root",
-          const char* output = "/work/eic/users/aabhishe/Calorimeter_Data_Gen/simulation_small_cell/edep_histogram.png")
+void edep(const char* input  = "/work/eic/users/aabhishe/Calorimeter_Data_Gen/simulation_small_cell/Data/pion100.root",
+          const char* output = "/work/eic/users/aabhishe/Calorimeter_Data_Gen/simulation_small_cell/edep_histogram_pi.png")
 {
   TFile *f = TFile::Open(input,"READ");
   if (!f || f->IsZombie()) {

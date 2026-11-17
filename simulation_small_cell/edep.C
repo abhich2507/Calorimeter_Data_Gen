@@ -1,14 +1,15 @@
 
-void edep()
+void edep(const char* input  = "/work/eic/users/aabhishe/HCAL_DATA/simulation_small_cell/data/proton100GeV.root",
+          const char* output = "/work/eic/users/aabhishe/HCAL_DATA/Plots/energy_deposition.pdf")
 {
-  TFile *f = TFile::Open("./build_5/output.root","READ");
+  TFile *f = TFile::Open(input,"READ");
   if (!f || f->IsZombie()) {
-    std::cerr << "Cannot open ./build_5/output.root" << std::endl;
+    std::cerr << "Cannot open " << input << std::endl;
     return;
   }
   TTree *t = (TTree*)f->Get("part_info");
   if (!t) {
-    std::cerr << "Tree \"part_info\" not found in output.root" << std::endl;
+    std::cerr << "Tree \"part_info\" not found in " << input << std::endl;
     return;
   }
 
@@ -52,6 +53,7 @@ void edep()
   TCanvas *c1 = new TCanvas("c1", "Energy Deposition", 800, 600);
   h1->Draw();
   c1->SetLogy();
-  c1->SaveAs("./edep_histogram.png");
+  gSystem->mkdir(gSystem->DirName(output), kTRUE);
+  c1->SaveAs(output);
 }
   

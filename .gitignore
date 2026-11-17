@@ -20,6 +20,9 @@ build_*/
 Ntuple_manager
 Ntuple_8
 
+# Geant4 ASCII run output
+*.out
+
 # macOS / editor clutter
 .DS_Store
 .vscode/

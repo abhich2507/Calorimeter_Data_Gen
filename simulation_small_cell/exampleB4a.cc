@@ -37,6 +37,7 @@
 #include "G4UIExecutive.hh"
 #include "G4VisExecutive.hh"
 #include "FTFP_BERT.hh"
+#include "QGSP_BERT.hh"
 #include "Randomize.hh"
 #include <map>
 
@@ -130,7 +131,8 @@ int main(int argc,char** argv)
   auto detConstruction = new B4::DetectorConstruction();
   runManager->SetUserInitialization(detConstruction);
 
-  auto physicsList = new FTFP_BERT;
+  //auto physicsList = new FTFP_BERT;
+  auto physicsList = new QGSP_BERT;
   runManager->SetUserInitialization(physicsList);
 
   auto actionInitialization = new B4a::ActionInitialization(detConstruction, outputFile);

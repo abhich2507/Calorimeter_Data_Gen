@@ -18,4 +18,4 @@
 /gun/particle proton
 /gun/energy 25 GeV
 #/run/printProgress 25
-/run/beamOn 100000
+/run/beamOn 1000

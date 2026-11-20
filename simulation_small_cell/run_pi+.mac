@@ -1,0 +1,6 @@
+/run/numberOfThreads 20
+/random/setSeeds 8904138 1546569
+/run/initialize
+/gun/particle pi+
+/gun/energy 100 GeV
+/run/beamOn 100
